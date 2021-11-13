@@ -90,7 +90,7 @@ class ApiError extends Error {
 	}
 
 	get actual() {
-		return this._underlying || this;
+		return (this._underlying || {}).underlying || this._underlying || this;
 	}
 
 	get stacked() {
