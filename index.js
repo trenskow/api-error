@@ -241,6 +241,42 @@ class ServiceUnavailable extends ApiError {
 
 }
 
+class Aggregated extends ApiError {
+
+	constructor(message, options) {
+
+		[ message, options ] = ApiError._correctArguments(message, options);
+
+		super(message || 'Multiple errors occurred.', merge(options, {
+			name: options.name || 'aggregated',
+			statusCode: 400
+		}));
+
+		this._errors = options.errors || [];
+
+		if (!Array.isArray(this._errors)) this._errors = [this._errors];
+
+		this._errors = this._errors.map((error) => this._check(error));
+
+	}
+
+	_check(error) {
+		if (error instanceof ApiError) return error;
+		throw new TypeError('Error must be of type `ApiError`.');
+	}
+
+	add(error) {
+		this._errors.push(this._check(error));
+	}
+
+	toJSON(options = {}) {
+		return merge(super.toJSON(options), {
+			errors: this._errors.map((error) => error.toJSON(options))
+		});
+	}
+
+}
+
 module.exports = exports = ApiError;
 exports.NotAuthorized = NotAuthorized;
 exports.Forbidden = Forbidden;
@@ -253,3 +289,4 @@ exports.PayloadTooLarge = PayloadTooLarge;
 exports.InternalError = InternalError;
 exports.NotImplemented = NotImplemented;
 exports.ServiceUnavailable = ServiceUnavailable;
+exports.Aggregated = Aggregated;
