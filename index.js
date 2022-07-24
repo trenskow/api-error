@@ -254,23 +254,25 @@ class Aggregated extends ApiError {
 
 		this._errors = options.errors || [];
 
-		if (!Array.isArray(this._errors)) this._errors = [this._errors];
-
-		this._errors = this._errors.map((error) => this._check(error));
+		this._errors = this._check(this._errors);
 
 	}
 
-	_check(error) {
-		if (error instanceof ApiError) return error;
-		throw new TypeError('Error must be of type `ApiError`.');
+	_check(errors) {
+		if (Array.isArray(errors) && errors.every((error) => error instanceof ApiError)) return errors;
+		throw new TypeError('Error must an array of type `ApiError`.');
 	}
 
 	add(error) {
-		this._errors.push(this._check(error));
+		this._errors = this._errors.concat(this._check(error));
 	}
 
 	get errors() {
 		return this._errors;
+	}
+
+	set errors(errors) {
+		this._errors = this._check(errors);
 	}
 
 	toJSON(options = {}) {
