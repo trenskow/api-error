@@ -269,6 +269,10 @@ class Aggregated extends ApiError {
 		this._errors.push(this._check(error));
 	}
 
+	get errors() {
+		return this._errors;
+	}
+
 	toJSON(options = {}) {
 		return merge(super.toJSON(options), {
 			errors: this._errors.map((error) => error.toJSON(options))
