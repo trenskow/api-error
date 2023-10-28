@@ -121,6 +121,18 @@ class NotAuthorized extends ApiError {
 
 }
 
+class PaymentRequired extends ApiError {
+
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Payment required.', merge(options, {
+			name: 'payment-required',
+			statusCode: 402
+		}));
+	}
+
+}
+
 class Forbidden extends ApiError {
 
 	constructor(message, options) {
@@ -286,6 +298,7 @@ class Aggregated extends ApiError {
 module.exports = exports = ApiError;
 exports.NotAuthorized = NotAuthorized;
 exports.Forbidden = Forbidden;
+exports.PaymentRequired = PaymentRequired;
 exports.NotFound = NotFound;
 exports.Conflict = Conflict;
 exports.MethodNotAllowed = MethodNotAllowed;
