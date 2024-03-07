@@ -10,7 +10,9 @@ class ApiError extends Error {
 		let error = new ApiError(merge(true, data, {
 			message: data.message,
 			statusCode: statusCode,
-			origin: origin
+			origin: origin,
+			keyPath: data.keyPath,
+			errors: data.errors?.map((error) => ApiError.parse(error, statusCode, origin))
 		}));
 		return error;
 	}
