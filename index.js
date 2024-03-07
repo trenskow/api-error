@@ -288,19 +288,27 @@ class Aggregated extends ApiError {
 			statusCode: 400
 		}));
 
-		this._errors = options.errors || options.underlying?.errors || [];
-
-		this._errors = this._check(this._errors);
+		this._errors = options.underlying?.errors || options.errors || [];
 
 	}
 
 	_check(errors) {
-		if (Array.isArray(errors) && errors.every((error) => error instanceof ApiError)) return errors;
+
+		if (Array.isArray(errors) && errors.every((error) => {
+			let prototype = Object.getPrototypeOf(error);
+			while (prototype !== null) {
+				if (prototype.constructor.name === 'ApiError') return true;
+				prototype = Object.getPrototypeOf(prototype);
+			}
+			return false;
+		})) return errors;
+
 		throw new TypeError('Error must an array of type `ApiError`.');
+
 	}
 
 	add(error) {
-		this._errors = this._errors.concat(this._check(error));
+		this._errors = this._errors.concat(this._check(Array.isArray(error) ? error : [error]));
 	}
 
 	get errors() {
