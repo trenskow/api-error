@@ -6,15 +6,37 @@ const
 
 class ApiError extends Error {
 
+	static _type(name) {
+		switch (name) {
+			case 'not-authorized': return NotAuthorized;
+			case 'payment-required': return PaymentRequired;
+			case 'forbidden': return Forbidden;
+			case 'not-found': return NotFound;
+			case 'already-exists': return Conflict;
+			case 'method-not-allowed': return MethodNotAllowed;
+			case 'bad-request': return BadRequest;
+			case 'too-many-requests': return TooManyRequests;
+			case 'payload-too-large': return PayloadTooLarge;
+			case 'internal-error': return InternalError;
+			case 'not-implemented': return NotImplemented;
+			case 'service-unavailable': return ServiceUnavailable;
+			case 'aggregated': return Aggregated;
+			default: return ApiError;
+		}
+	}
+
 	static parse(data, statusCode, origin) {
-		let error = new ApiError(merge(true, data, {
+
+		let options = merge(data, {
 			message: data.message,
 			statusCode: statusCode,
-			origin: origin,
-			keyPath: data.keyPath,
-			errors: data.errors?.map((error) => ApiError.parse(error, statusCode, origin))
-		}));
-		return error;
+			origin: origin
+		});
+
+		options.errors = options.errors?.map((error) => ApiError.parse(error, statusCode, origin));
+
+		return new (this._type(data.name || 'bad-request'))(options);
+
 	}
 
 	static _correctArguments(message, options) {
@@ -266,7 +288,7 @@ class Aggregated extends ApiError {
 			statusCode: 400
 		}));
 
-		this._errors = options.errors || [];
+		this._errors = options.errors || options.underlying?.errors || [];
 
 		this._errors = this._check(this._errors);
 
