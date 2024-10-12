@@ -1,6 +1,6 @@
 {
   "name": "@trenskow/api-error",
-  "version": "2.4.14",
+  "version": "2.4.15",
   "description": "A small collection of error objects that can be used for REST APIs.",
   "main": "index.js",
   "scripts": {
