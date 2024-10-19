@@ -1,4 +1,4 @@
-import merge from 'merge';
+import merge from '@trenskow/merge';
 import stack from '@trenskow/stack';
 
 class ApiError extends Error {
@@ -24,7 +24,7 @@ class ApiError extends Error {
 
 	static parse(data, statusCode, origin) {
 
-		let options = merge(data, {
+		let options = merge({}, data, {
 			message: data.message,
 			statusCode: statusCode,
 			origin: origin
@@ -134,7 +134,7 @@ class NotAuthorized extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Not authorized.', merge(options, {
+		super(message || 'Not authorized.', merge({}, options, {
 			name: 'not-authorized',
 			statusCode: 401
 		}));
@@ -146,7 +146,7 @@ class PaymentRequired extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Payment required.', merge(options, {
+		super(message || 'Payment required.', merge({}, options, {
 			name: 'payment-required',
 			statusCode: 402
 		}));
@@ -158,7 +158,7 @@ class Forbidden extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Forbidden.', merge(options, {
+		super(message || 'Forbidden.', merge({}, options, {
 			name: 'forbidden',
 			statusCode: 403
 		}));
@@ -170,7 +170,7 @@ class NotFound extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Resource not found.', merge(options, {
+		super(message || 'Resource not found.', merge({}, options, {
 			name: options.name || 'not-found',
 			statusCode: 404
 		}));
@@ -182,7 +182,7 @@ class Conflict extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Resource already exists.', merge(options, {
+		super(message || 'Resource already exists.', merge({}, options, {
 			name: options.name || 'already-exists',
 			statusCode: 409
 		}));
@@ -194,7 +194,7 @@ class MethodNotAllowed extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Method is not allowed.', merge(options, {
+		super(message || 'Method is not allowed.', merge({}, options, {
 			name: options.name || 'method-not-allowed',
 			statusCode: 405
 		}));
@@ -206,7 +206,7 @@ class BadRequest extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Bad request', merge(options, {
+		super(message || 'Bad request', merge({}, options, {
 			name: options.name || 'bad-request',
 			statusCode: 400
 		}));
@@ -218,7 +218,7 @@ class TooManyRequests extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Too many requests.', merge(options, {
+		super(message || 'Too many requests.', merge({}, options, {
 			name: options.name || 'too-many-requests',
 			statusCode: 429
 		}));
@@ -230,7 +230,7 @@ class PayloadTooLarge extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Payload too large.', merge(options, {
+		super(message || 'Payload too large.', merge({}, options, {
 			name: options.name || 'payload-too-large',
 			statusCode: 413
 		}));
@@ -242,7 +242,7 @@ class InternalError extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Internal server error.', merge(options, {
+		super(message || 'Internal server error.', merge({}, options, {
 			name: options.name || 'internal-error',
 			statusCode: 500
 		}));
@@ -254,7 +254,7 @@ class NotImplemented extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Not implemented.', merge(options, {
+		super(message || 'Not implemented.', merge({}, options, {
 			name: options.name || 'not-implemented',
 			statusCode: 501
 		}));
@@ -266,7 +266,7 @@ class ServiceUnavailable extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Service unavailable.', merge(options, {
+		super(message || 'Service unavailable.', merge({}, options, {
 			name: options.name || 'service-unavailable',
 			statusCode: 503
 		}));
@@ -280,7 +280,7 @@ class Aggregated extends ApiError {
 
 		[ message, options ] = ApiError._correctArguments(message, options);
 
-		super(message || 'Multiple errors occurred.', merge(options, {
+		super(message || 'Multiple errors occurred.', merge({}, options, {
 			name: options.name || 'aggregated',
 			statusCode: 400
 		}));
@@ -317,7 +317,7 @@ class Aggregated extends ApiError {
 	}
 
 	toJSON(options = {}) {
-		return merge(super.toJSON(options), {
+		return merge({}, super.toJSON(options), {
 			errors: this._errors.map((error) => error.toJSON(options))
 		});
 	}
