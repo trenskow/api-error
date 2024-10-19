@@ -1,5 +1,3 @@
-'use strict';
-
 import merge from 'merge';
 import stack from '@trenskow/stack';
 
