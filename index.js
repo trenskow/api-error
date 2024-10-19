@@ -1,8 +1,7 @@
 'use strict';
 
-const
-	merge = require('merge'),
-	stack = require('@trenskow/stack');
+import merge from 'merge';
+import stack from '@trenskow/stack';
 
 class ApiError extends Error {
 
@@ -327,17 +326,19 @@ class Aggregated extends ApiError {
 
 }
 
-module.exports = exports = ApiError;
-exports.NotAuthorized = NotAuthorized;
-exports.Forbidden = Forbidden;
-exports.PaymentRequired = PaymentRequired;
-exports.NotFound = NotFound;
-exports.Conflict = Conflict;
-exports.MethodNotAllowed = MethodNotAllowed;
-exports.BadRequest = BadRequest;
-exports.TooManyRequests = TooManyRequests;
-exports.PayloadTooLarge = PayloadTooLarge;
-exports.InternalError = InternalError;
-exports.NotImplemented = NotImplemented;
-exports.ServiceUnavailable = ServiceUnavailable;
-exports.Aggregated = Aggregated;
+export default {
+	ApiError,
+	NotAuthorized,
+	Forbidden,
+	PaymentRequired,
+	NotFound,
+	Conflict,
+	MethodNotAllowed,
+	BadRequest,
+	TooManyRequests,
+	PayloadTooLarge,
+	InternalError,
+	NotImplemented,
+	ServiceUnavailable,
+	Aggregated
+};
