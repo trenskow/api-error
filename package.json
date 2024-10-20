@@ -23,7 +23,7 @@
 	},
 	"homepage": "https://github.com/trenskow/api-error#readme",
 	"dependencies": {
-		"@trenskow/merge": "^0.1.26",
+		"@trenskow/merge": "^0.1.27",
 		"@trenskow/stack": "^0.2.0"
 	},
 	"devDependencies": {
