@@ -324,8 +324,23 @@ class Aggregated extends ApiError {
 
 }
 
-export default {
-	ApiError,
+export default ApiError;
+
+ApiError.NotAuthorized = NotAuthorized;
+ApiError.Forbidden = Forbidden;
+ApiError.PaymentRequired = PaymentRequired;
+ApiError.NotFound = NotFound;
+ApiError.Conflict = Conflict;
+ApiError.MethodNotAllowed = MethodNotAllowed;
+ApiError.BadRequest = BadRequest;
+ApiError.TooManyRequests = TooManyRequests;
+ApiError.PayloadTooLarge = PayloadTooLarge;
+ApiError.InternalError = InternalError;
+ApiError.NotImplemented = NotImplemented;
+ApiError.ServiceUnavailable = ServiceUnavailable;
+ApiError.Aggregated = Aggregated;
+
+export {
 	NotAuthorized,
 	Forbidden,
 	PaymentRequired,
