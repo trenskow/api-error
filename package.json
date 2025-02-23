@@ -23,13 +23,13 @@
 	},
 	"homepage": "https://github.com/trenskow/api-error#readme",
 	"dependencies": {
-		"@trenskow/merge": "^0.1.36",
-		"@trenskow/stack": "^0.2.4"
+		"@trenskow/merge": "^0.1.37",
+		"@trenskow/stack": "^0.2.5"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.0",
 		"@eslint/js": "^9.13.0",
 		"eslint": "^9.21.0",
-		"globals": "^15.15.0"
+		"globals": "^16.0.0"
 	}
 }
