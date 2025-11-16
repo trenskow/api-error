@@ -22,13 +22,12 @@ class ApiError extends Error {
 		}
 	}
 
-	static parse(data, statusCode, origin, stack) {
+	static parse(data, statusCode, origin) {
 
 		let options = merge({}, data, {
 			message: data.message,
 			statusCode: statusCode,
-			origin: origin,
-			stack: stack
+			origin: origin
 		});
 
 		options.errors = options.errors?.map((error) => ApiError.parse(error, statusCode, origin, error.stack));
