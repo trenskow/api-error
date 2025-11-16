@@ -22,15 +22,16 @@ class ApiError extends Error {
 		}
 	}
 
-	static parse(data, statusCode, origin) {
+	static parse(data, statusCode, origin, stack) {
 
 		let options = merge({}, data, {
 			message: data.message,
 			statusCode: statusCode,
-			origin: origin
+			origin: origin,
+			stack: stack
 		});
 
-		options.errors = options.errors?.map((error) => ApiError.parse(error, statusCode, origin));
+		options.errors = options.errors?.map((error) => ApiError.parse(error, statusCode, origin, error.stack));
 
 		return new (this._type(data.name || 'bad-request'))(options);
 
@@ -64,11 +65,13 @@ class ApiError extends Error {
 		this._name = options.name;
 		this._entity = options.entity;
 		this._statusCode = options.statusCode || 500;
+		this._stacked = options.stack;
 
 		delete options.message;
 		delete options.name;
 		delete options.entity;
 		delete options.statusCode;
+		delete options.stack;
 
 		this._options = options;
 
