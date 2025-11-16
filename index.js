@@ -118,6 +118,7 @@ class ApiError extends Error {
 	}
 
 	get stacked() {
+		if (this.actual._stacked) return this.actual._stacked;
 		return ApiError.stackToJSON(this.actual.stack);
 	}
 
