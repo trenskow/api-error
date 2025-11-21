@@ -17,6 +17,7 @@ class ApiError extends Error {
 			case 'internal-error': return InternalError;
 			case 'not-implemented': return NotImplemented;
 			case 'service-unavailable': return ServiceUnavailable;
+			case 'upgrade-required': return UpgradeRequired;
 			case 'aggregated': return Aggregated;
 			default: return ApiError;
 		}
@@ -277,6 +278,17 @@ class ServiceUnavailable extends ApiError {
 
 }
 
+class UpgradeRequired extends ApiError {
+
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Upgrade is required.', Object.assign(options, {
+			name: 'upgrade-required'
+		}));
+	}
+
+}
+
 class Aggregated extends ApiError {
 
 	constructor(message, options) {
@@ -341,6 +353,7 @@ ApiError.PayloadTooLarge = PayloadTooLarge;
 ApiError.InternalError = InternalError;
 ApiError.NotImplemented = NotImplemented;
 ApiError.ServiceUnavailable = ServiceUnavailable;
+ApiError.UpgradeRequired = UpgradeRequired;
 ApiError.Aggregated = Aggregated;
 
 export {
@@ -356,5 +369,6 @@ export {
 	InternalError,
 	NotImplemented,
 	ServiceUnavailable,
+	UpgradeRequired,
 	Aggregated
 };
