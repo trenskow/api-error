@@ -283,7 +283,8 @@ class UpgradeRequired extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Upgrade is required.', Object.assign(options, {
-			name: 'upgrade-required'
+			name: 'upgrade-required',
+			statusCode: 426
 		}));
 	}
 
