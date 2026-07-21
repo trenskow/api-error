@@ -18,6 +18,7 @@ class ApiError extends Error {
 			case 'not-implemented': return NotImplemented;
 			case 'service-unavailable': return ServiceUnavailable;
 			case 'upgrade-required': return UpgradeRequired;
+			case 'request-timeout': return RequestTimeout;
 			case 'aggregated': return Aggregated;
 			default: return ApiError;
 		}
@@ -290,6 +291,18 @@ class UpgradeRequired extends ApiError {
 
 }
 
+class RequestTimeout extends ApiError {
+
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Request timeout.', Object.assign(options, {
+			name: 'request-timeout',
+			statusCode: 408
+		}));
+	}
+
+}
+
 class Aggregated extends ApiError {
 
 	constructor(message, options) {
@@ -355,6 +368,7 @@ ApiError.InternalError = InternalError;
 ApiError.NotImplemented = NotImplemented;
 ApiError.ServiceUnavailable = ServiceUnavailable;
 ApiError.UpgradeRequired = UpgradeRequired;
+ApiError.RequestTimeout = RequestTimeout;
 ApiError.Aggregated = Aggregated;
 
 export {
@@ -371,5 +385,6 @@ export {
 	NotImplemented,
 	ServiceUnavailable,
 	UpgradeRequired,
+	RequestTimeout,
 	Aggregated
 };
